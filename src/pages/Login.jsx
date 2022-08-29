@@ -21,11 +21,15 @@ class Login extends React.Component {
 
   validadeInfo = () => {
     const { email, password } = this.state;
-    // const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.[a-z]?$/i;
+    const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]/i;
     const passwordLength = 6;
-    if (email.includes('@') && password.length >= passwordLength) {
+    if (email.match(emailRegex) && password.length >= passwordLength) {
       this.setState({
         validData: true,
+      });
+    } else {
+      this.setState({
+        validData: false,
       });
     }
   };
@@ -60,7 +64,8 @@ class Login extends React.Component {
           <button
             type="submit"
             disabled={ !validData }
-            onClick={ () => {
+            onClick={ (e) => {
+              e.preventDefault();
               login(email);
               history.push('/carteira');
             } }
