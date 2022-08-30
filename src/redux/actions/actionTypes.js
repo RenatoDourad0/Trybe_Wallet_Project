@@ -1,3 +1,8 @@
+// user actions
 export const LOGIN = 'LOGIN';
 
-export const ADD = 'ADD';
+// wallet actions
+export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
+export const GET_CURRENCIES = 'GET_CURRENCIES';
+export const GET_CURRENCIES_ERROR = 'GET_CURRENCIES_ERROR';
