@@ -13,11 +13,9 @@ class Header extends Component {
     return (
       <section>
         <img src="" alt="Logo" />
-        <span data-testid="email-field">{ email }</span>
-        {' '}
-        <span data-testid="total-field">{ expensesSum }</span>
-        {' '}
-        <span data-testid="header-currency-field">BRL</span>
+        <h3 data-testid="email-field">{ email }</h3>
+        <h3 data-testid="total-field">{ expensesSum }</h3>
+        <h3 data-testid="header-currency-field">BRL</h3>
       </section>
     );
   }
