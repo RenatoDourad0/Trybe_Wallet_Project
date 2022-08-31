@@ -5,7 +5,7 @@
   "engines": {
     "node": "16"
   },
-  "homepage" : "https://github.com/RenatoDourad0/Trybe_Wallet_Project",
+  "homepage" : "https://RenatoDourad0.github.io/Trybe_Wallet_Project",
   "dependencies": {
     "@redux-devtools/extension": "3.2.2",
     "@testing-library/jest-dom": "^5.11.9",
