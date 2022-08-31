@@ -5,12 +5,15 @@
   "engines": {
     "node": "16"
   },
+  "homepage" : "https://github.com/RenatoDourad0/Trybe_Wallet_Project",
   "dependencies": {
     "@redux-devtools/extension": "3.2.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
+    "bulma": "^0.9.4",
     "fetch-mock": "^9.11.0",
+    "gh-pages": "^4.0.0",
     "node-fetch": "^2.6.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -23,15 +26,13 @@
     "stylelint-order": "5.0.0"
   },
   "scripts": {
-    "cy": "env CY_CLI=true cypress run",
-    "cy:open": "cypress open --e2e --browser chrome",
     "start": "env ESLINT_NO_DEV_ERRORS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test-coverage": "react-scripts test --coverage --watchAll=false",
-    "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js, .jsx",
-    "lint:styles": "npx stylelint '**/*.css'"
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

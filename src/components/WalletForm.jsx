@@ -7,6 +7,8 @@ import {
   fetchExchangeRatesAction,
   submitEditedExpenseAction,
 } from '../redux/actions/walletActions';
+import 'bulma/css/bulma-rtl.css';
+import '../styles/App.css';
 
 class WalletForm extends Component {
   constructor() {

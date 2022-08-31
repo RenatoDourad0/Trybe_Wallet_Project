@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { removeExpenseAction, editExpenseAction } from '../redux/actions/walletActions';
+import 'bulma/css/bulma-rtl.css';
+import '../styles/App.css';
 
 class Table extends Component {
   render() {

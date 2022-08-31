@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import 'bulma/css/bulma-rtl.css';
+import '../styles/App.css';
 
 class Header extends Component {
   render() {
