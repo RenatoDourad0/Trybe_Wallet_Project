@@ -1,17 +1,21 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fetchMock from 'fetch-mock-jest';
-import mockData from './mockData';
-import renderWithRouterAndRedux from './renderWith';
-import App from '../../App';
+import mockData from './helpers/mockData';
+import renderWithRouterAndRedux from './helpers/renderWith';
+import App from '../App';
 
 describe('teste unitário página de login', () => {
   afterEach(() => {
     fetchMock.reset();
   });
 
-  it('o botao de entrar esta desabilitado caso nao tenha sido preenchido nada', () => {
+  const URL = 'https://economia.awesomeapi.com.br/json/all';
+
+  it('o botao de entrar esta desabilitado caso nao tenha sido preenchido nada', async () => {
     renderWithRouterAndRedux(<App />);
+
+    fetchMock.getOnce(URL, { ...mockData });
 
     const emailInputField = screen.getByLabelText(/email:/i);
     const passwordInputField = screen.getByLabelText(/senha:/i);
@@ -19,12 +23,16 @@ describe('teste unitário página de login', () => {
 
     userEvent.click(submitButton);
 
+    await waitFor(() => expect(fetchMock.called()).not.toBeTruthy());
+
     expect(emailInputField).toBeInTheDocument();
     expect(passwordInputField).toBeInTheDocument();
   });
 
-  it('o botao de entrar esta desabilitado caso o email estaja fora do padrao', () => {
+  it('o botao de entrar esta desabilitado caso o email estaja fora do padrao', async () => {
     renderWithRouterAndRedux(<App />);
+
+    fetchMock.getOnce(URL, { ...mockData });
 
     const emailInputField = screen.getByLabelText(/email:/i);
     const passwordInputField = screen.getByLabelText(/senha:/i);
@@ -33,12 +41,16 @@ describe('teste unitário página de login', () => {
     userEvent.type(emailInputField, 'renato');
     userEvent.click(submitButton);
 
+    await waitFor(() => expect(fetchMock.called()).not.toBeTruthy());
+
     expect(emailInputField).toBeInTheDocument();
     expect(passwordInputField).toBeInTheDocument();
   });
 
-  it('o botao de entrar esta desabilitado caso a senha estaja fora do padrao', () => {
+  it('o botao de entrar esta desabilitado caso a senha estaja fora do padrao', async () => {
     renderWithRouterAndRedux(<App />);
+
+    fetchMock.getOnce(URL, { ...mockData });
 
     const emailInputField = screen.getByLabelText(/email:/i);
     const passwordInputField = screen.getByLabelText(/senha:/i);
@@ -48,6 +60,8 @@ describe('teste unitário página de login', () => {
     userEvent.type(passwordInputField, '123');
     userEvent.click(submitButton);
 
+    await waitFor(() => expect(fetchMock.called()).not.toBeTruthy());
+
     expect(emailInputField).toBeInTheDocument();
     expect(passwordInputField).toBeInTheDocument();
   });
@@ -55,7 +69,7 @@ describe('teste unitário página de login', () => {
   it('o usuário e redirecionado em caso de sucesso de login', async () => {
     const { history } = renderWithRouterAndRedux(<App />);
 
-    fetchMock.getOnce('https://economia.awesomeapi.com.br/json/all', { mockData });
+    fetchMock.getOnce(URL, { mockData });
 
     const emailInputField = screen.getByLabelText(/email:/i);
     const passwordInputField = screen.getByLabelText(/senha:/i);
