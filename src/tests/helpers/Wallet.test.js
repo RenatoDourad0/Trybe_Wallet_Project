@@ -1,38 +1,43 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-// import mockData from './mockData';
+import mockData from './mockData';
 import renderWithRouterAndRedux from './renderWith';
 import App from '../../App';
 
 describe('teste unitário página da carteira', () => {
+
+  beforeEach(() => {
+    global.fetch = jest.fn().mockResolvedValue({
+      json: jest.fn().mockResolvedValue({
+        data: jest.fn().mockReturnValue({
+          type: 'GET_CURRENCIES',
+          mockData,
+        })
+      }),
+    })
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  })
+
   it('o botao de adicionar esta desabilitado caso nao tenha sido preenchido nada', () => {
-    renderWithRouterAndRedux(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
 
-    const emailInputField = screen.getByLabelText(/email:/i);
-    const passwordInputField = screen.getByLabelText(/senha:/i);
-    const enterButton = screen.getByRole('button', { name: /entrar/i });
+    history.push('/carteira');
 
-    userEvent.type(emailInputField, 'renat@dourado.com');
-    userEvent.type(passwordInputField, '1234567');
-    userEvent.click(enterButton);
-
-    const valueInputField = screen.getByLabelText(/valor:/i);
     const submitButton = screen.getByRole('button', { name: /adicionar despesa/i });
     userEvent.click(submitButton);
 
-    expect(valueInputField).toHaveTextContent('');
+    const excluirButton = screen.queryByRole('button', { name: /excluir/i });
+
+    expect(excluirButton).not.toBeInTheDocument();
   });
 
   it('o botao de adicionar esta desabilitado caso preenchido somente valor', () => {
-    renderWithRouterAndRedux(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
 
-    const emailInputField = screen.getByLabelText(/email:/i);
-    const passwordInputField = screen.getByLabelText(/senha:/i);
-    const enterButton = screen.getByRole('button', { name: /entrar/i });
-
-    userEvent.type(emailInputField, 'renato@douradoo.com');
-    userEvent.type(passwordInputField, '1234567');
-    userEvent.click(enterButton);
+    history.push('/carteira');
 
     const valueInputField = screen.getByLabelText(/valor:/i);
     const submitButton = screen.getByRole('button', { name: /adicionar despesa/i });
@@ -40,19 +45,15 @@ describe('teste unitário página da carteira', () => {
     userEvent.type(valueInputField, '10');
     userEvent.click(submitButton);
 
-    expect(valueInputField).toHaveTextContent('10');
+    const expeses = screen.queryAllByText('10.00');
+
+    expect(expeses.length).toBe(0);
   });
 
   it('o botao de adicionar esta desabilitado caso preenchido somente descrição', () => {
-    renderWithRouterAndRedux(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
 
-    const emailInputField = screen.getByLabelText(/email:/i);
-    const passwordInputField = screen.getByLabelText(/senha:/i);
-    const enterButton = screen.getByRole('button', { name: /entrar/i });
-
-    userEvent.type(emailInputField, 'renato@dourado.com');
-    userEvent.type(passwordInputField, '1234567');
-    userEvent.click(enterButton);
+    history.push('/carteira');
 
     const descriptionInputField = screen.getByLabelText(/Descrição:/i);
     const submitButton = screen.getByRole('button', { name: /adicionar despesa/i });
@@ -60,19 +61,13 @@ describe('teste unitário página da carteira', () => {
     userEvent.type(descriptionInputField, 'a');
     userEvent.click(submitButton);
 
-    expect(descriptionInputField).toHaveTextContent('a');
+    expect(screen.queryAllByText('a').length).toBe(0);
   });
 
   it('a despesa é adicionada ao store se preenchido corretamente', () => {
-    const { store } = renderWithRouterAndRedux(<App />);
+    const { store, history } = renderWithRouterAndRedux(<App />);
 
-    const emailInputField = screen.getByLabelText(/email:/i);
-    const passwordInputField = screen.getByLabelText(/senha:/i);
-    const enterButton = screen.getByRole('button', { name: /entrar/i });
-
-    userEvent.type(emailInputField, 'renato@dourado.com');
-    userEvent.type(passwordInputField, '1234567');
-    userEvent.click(enterButton);
+    history.push('/carteira');
 
     const valueInputField = screen.getByLabelText(/valor:/i);
     const descriptionInputField = screen.getByLabelText(/Descrição:/i);
@@ -82,34 +77,19 @@ describe('teste unitário página da carteira', () => {
     userEvent.type(descriptionInputField, 'a');
     userEvent.click(submitButton);
 
-    const expectedState = {
-      id: 0,
-      value: '10',
-      description: 'a',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
-    };
+    const expese1 = screen.queryAllByText('a');
+    const expese2 = screen.queryAllByText('10.00');
 
-    const state = store.getState();
-    console.log(state);
-
-    expect(state.wallet.expenses.length).toBe(1);
-    expect(state.wallet.expenses[0]).toEqual(expectedState);
+    expect(expese1.length).toBe(1);
+    expect(expese2.length).toBe(1);
   });
 });
 
 describe('teste unitário do componente Header', () => {
   it('tem o valor 0 ao carregar a página', () => {
-    renderWithRouterAndRedux(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
 
-    const emailInputField = screen.getByLabelText(/email:/i);
-    const passwordInputField = screen.getByLabelText(/senha:/i);
-    const enterButton = screen.getByRole('button', { name: /entrar/i });
-
-    userEvent.type(emailInputField, 'renato@cdourado.com');
-    userEvent.type(passwordInputField, '1234567');
-    userEvent.click(enterButton);
+    history.push('/carteira');
 
     const valueField = screen.getByRole('heading', { level: 3, name: '0.00' });
 
@@ -117,15 +97,9 @@ describe('teste unitário do componente Header', () => {
   });
 
   it('tem o valor 10 ao adicionar uma despesa de 10 e 20 se adicionar duas despesas de 10', () => {
-    renderWithRouterAndRedux(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
 
-    const emailInputField = screen.getByLabelText(/email:/i);
-    const passwordInputField = screen.getByLabelText(/senha:/i);
-    const enterButton = screen.getByRole('button', { name: /entrar/i });
-
-    userEvent.type(emailInputField, 'renato@cdourado.com');
-    userEvent.type(passwordInputField, '1234567');
-    userEvent.click(enterButton);
+    history.push('/carteira');
 
     const valueInputField = screen.getByLabelText(/Valor:/i);
     const descriptionInputField = screen.getByLabelText(/descrição:/i);
@@ -135,12 +109,12 @@ describe('teste unitário do componente Header', () => {
     userEvent.type(descriptionInputField, 'a');
     userEvent.click(submitButton);
 
-    expect(screen.getByRole('heading', { level: 3, name: '51.09' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 3, name: '47.53' })).toBeInTheDocument();
 
     userEvent.type(valueInputField, '10');
     userEvent.type(descriptionInputField, 'b');
     userEvent.click(submitButton);
 
-    expect(screen.getByRole('heading', { level: 3, name: '20.00' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 3, name: '95.06' })).toBeInTheDocument();
   });
 });

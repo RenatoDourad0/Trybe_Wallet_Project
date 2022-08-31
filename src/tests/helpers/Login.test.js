@@ -1,10 +1,23 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-// import mockData from './mockData';
+import mockData from './mockData';
 import renderWithRouterAndRedux from './renderWith';
 import App from '../../App';
 
 describe('teste unitário página de login', () => {
+  
+  beforeEach(() => {
+    global.fetch = jest.fn().mockResolvedValue({
+      json: jest.fn().mockResolvedValue({
+        data: jest.fn().mockResolvedValue(mockData)
+      }),
+    })
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  })
+
   it('o botao de entrar esta desabilitado caso nao tenha sido preenchido nada', () => {
     renderWithRouterAndRedux(<App />);
 

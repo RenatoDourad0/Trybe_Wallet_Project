@@ -1,17 +1,14 @@
 import {
   ADD_EXPENSE,
-  REMOVE_EXPENSE,
   GET_CURRENCIES,
   GET_CURRENCIES_ERROR,
+  REMOVE_EXPENSE,
+  EDIT_EXPENSE,
+  SUBMIT_EDITED_EXPENSE,
 } from './actionTypes';
 
 export const addExpenseAction = (payload) => ({
   type: ADD_EXPENSE,
-  payload,
-});
-
-export const removeExpenseAction = (payload) => ({
-  type: REMOVE_EXPENSE,
   payload,
 });
 
@@ -32,4 +29,19 @@ export const fetchCurrenciesAction = () => (dispatch) => fetch('https://economia
 
 export const fetchExchangeRatesAction = () => () => fetch('https://economia.awesomeapi.com.br/json/all')
   .then((response) => response.json())
-  .then((data) => ({ data }));
+  .then((data) => (data));
+
+export const removeExpenseAction = (payload) => ({
+  type: REMOVE_EXPENSE,
+  payload,
+});
+
+export const editExpenseAction = (payload) => ({
+  type: EDIT_EXPENSE,
+  payload,
+});
+
+export const submitEditedExpenseAction = (payload) => ({
+  type: SUBMIT_EDITED_EXPENSE,
+  payload,
+});

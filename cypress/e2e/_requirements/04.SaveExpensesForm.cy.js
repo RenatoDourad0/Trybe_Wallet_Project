@@ -47,7 +47,7 @@ describe('4 - Salve todas as informações do formulário no estado global', () 
     };
 
     addExpense(expense);
-
+    console.log(cy.window().its('store').invoke('getState'));
     cy.window().its('store').invoke('getState')
       .its('wallet.expenses')
       .should('deep.equal', [
@@ -57,6 +57,7 @@ describe('4 - Salve todas as informações do formulário no estado global', () 
           exchangeRates: mockData,
         },
       ]);
+
   });
 
   it('Verifica se a API é chamada a cada vez que o botão \'Adicionar despesa\' é clicado', () => {

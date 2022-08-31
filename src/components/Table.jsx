@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { removeExpenseAction, editExpenseAction } from '../redux/actions/walletActions';
 
 class Table extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, removeExpense, editExpense } = this.props;
     return (
       <table>
         <thead>
@@ -21,8 +22,8 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          { expenses.map((expense, index) => (
-            <tr key={ index }>
+          { expenses.map((expense) => (
+            <tr key={ expense.id }>
               <td>{ expense.description }</td>
               <td>{ expense.tag }</td>
               <td>{ expense.method }</td>
@@ -41,7 +42,22 @@ class Table extends Component {
                 }
               </td>
               <td>Real</td>
-              <td><button type="button">X</button></td>
+              <td>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => removeExpense(expense.id) }
+                >
+                  Excluir
+                </button>
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                  onClick={ () => editExpense(expense.id) }
+                >
+                  Editar despesa
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -54,8 +70,15 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (payload) => dispatch(removeExpenseAction(payload)),
+  editExpense: (payload) => dispatch(editExpenseAction(payload)),
+});
+
 Table.propTypes = {
-  expenses: PropTypes.shape([{}]).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  removeExpense: PropTypes.func.isRequired,
+  editExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

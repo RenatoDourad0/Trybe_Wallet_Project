@@ -1,8 +1,10 @@
 import {
   ADD_EXPENSE,
-  REMOVE_EXPENSE,
   GET_CURRENCIES,
   GET_CURRENCIES_ERROR,
+  REMOVE_EXPENSE,
+  EDIT_EXPENSE,
+  SUBMIT_EDITED_EXPENSE,
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -10,7 +12,7 @@ const INITIAL_STATE = {
   rates: [],
   expenses: [],
   editor: false,
-  idToEdit: 0,
+  idToEdit: -1,
   error: {
     currencies: '',
     rates: '',
@@ -24,11 +26,6 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: [...state.expenses, action.payload],
     };
-  case REMOVE_EXPENSE:
-    return {
-      ...state,
-      expenses: state.expenses.filter((expense) => expense.id !== action.payload),
-    };
   case GET_CURRENCIES:
     return {
       ...state,
@@ -40,6 +37,24 @@ function wallet(state = INITIAL_STATE, action) {
       error: {
         currencies: action.payload,
       },
+    };
+  case REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses.filter((expense) => expense.id !== action.payload)],
+    };
+  case EDIT_EXPENSE:
+    return {
+      ...state,
+      editor: true,
+      idToEdit: action.payload,
+    };
+  case SUBMIT_EDITED_EXPENSE:
+    return {
+      ...state,
+      editor: false,
+      expenses: action.payload,
+      idToEdit: -1,
     };
   default:
     return state;

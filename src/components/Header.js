@@ -5,11 +5,12 @@ import { connect } from 'react-redux';
 class Header extends Component {
   render() {
     const { email, expenses } = this.props;
+    console.log(expenses);
     const expensesSum = expenses
-      .map((expense) => parseFloat(expense
-        .value * expense.exchangeRates[expense.currency].ask))
+      .map((expense) => parseFloat(parseFloat(expense
+        .value) * expense.exchangeRates[expense.currency].ask))
       .reduce((curr, acc) => acc + curr, 0)
-      .toFixed(2);
+      .toFixed(2) || 0.00;
     return (
       <section>
         <img src="" alt="Logo" />
