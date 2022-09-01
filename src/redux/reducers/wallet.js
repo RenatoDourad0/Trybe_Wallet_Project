@@ -5,6 +5,7 @@ import {
   REMOVE_EXPENSE,
   EDIT_EXPENSE,
   SUBMIT_EDITED_EXPENSE,
+  SAVE_EXPENSES,
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -55,6 +56,11 @@ function wallet(state = INITIAL_STATE, action) {
       editor: false,
       expenses: action.payload,
       idToEdit: -1,
+    };
+  case SAVE_EXPENSES:
+    return {
+      ...state,
+      expenses: action.payload,
     };
   default:
     return state;

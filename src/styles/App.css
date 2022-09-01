@@ -17,4 +17,81 @@
   width: 100%;
 }
 
+.centered {
+  display: block;
+  margin: auto;
+}
 
+.loginValidationIcon {
+  padding-right: 50px;
+}
+
+.loginValidationInput {
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.passwordContainer {
+  position: relative;
+}
+
+.showPasswordLabel {
+  position: absolute;
+  top: 53%;
+  right: 0;
+  cursor: pointer;
+}
+
+.logo {
+  max-width: 100px;
+}
+
+.totalExpenses {
+  font-weight: bolder;
+}
+
+.userInfo {
+  font-weight: bold;
+}
+
+.userIcon {
+  width: 30px;
+  height: 30px
+}
+
+.username {
+  padding-left: 10px;
+}
+
+/* .walletForm {
+  position: relative;
+  max-width: 90%;
+}
+
+.walletFormButton {
+  position: absolute;
+  bottom: 15%;
+  right: -15%;
+} */
+
+/* .tableHeadItem {
+  text-align: center;
+} */
+
+.tableRow {
+  height: 85px;
+  min-height: 85px;
+}
+
+.tableEditMenu {
+  width: 100px;
+}
+
+.tableEditionButton {
+  max-width: 70px;
+  max-height: 30px;
+}
+
+.tableEditionButton:nth-child(1) {
+  margin-bottom: 5px;
+}

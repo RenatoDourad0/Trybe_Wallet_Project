@@ -5,6 +5,7 @@ import {
   REMOVE_EXPENSE,
   EDIT_EXPENSE,
   SUBMIT_EDITED_EXPENSE,
+  SAVE_EXPENSES
 } from './actionTypes';
 
 export const addExpenseAction = (payload) => ({
@@ -43,5 +44,10 @@ export const editExpenseAction = (payload) => ({
 
 export const submitEditedExpenseAction = (payload) => ({
   type: SUBMIT_EDITED_EXPENSE,
+  payload,
+});
+
+export const saveExpesesToStoreAction = (payload) => ({
+  type: SAVE_EXPENSES,
   payload,
 });

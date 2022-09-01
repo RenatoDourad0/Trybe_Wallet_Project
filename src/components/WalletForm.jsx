@@ -6,6 +6,7 @@ import {
   fetchCurrenciesAction,
   fetchExchangeRatesAction,
   submitEditedExpenseAction,
+  saveExpesesToStoreAction,
 } from '../redux/actions/walletActions';
 import 'bulma/css/bulma-rtl.css';
 import '../styles/App.css';
@@ -26,12 +27,13 @@ class WalletForm extends Component {
   componentDidMount() {
     const { fetchCurrencies } = this.props;
     fetchCurrencies();
+    this.getExpesesFromLocalstore();
   }
 
-  // componentDidUpdate() {
-  //   const { editor } = this.props;
-  //   if (editor) { this.getExpenseToEditInfo(); }
-  // }
+  componentDidUpdate() {
+    const { editor } = this.props;
+    if (editor) { this.getExpenseToEditInfo(); }
+  }
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({
@@ -50,10 +52,9 @@ class WalletForm extends Component {
     };
     const { editor } = this.props;
     if (editor) {
-      this.handleEditSubmit(INITIAL_STATE);
-    } else {
-      this.handleAddSubmit(INITIAL_STATE);
-    }
+      return this.handleEditSubmit(INITIAL_STATE);
+    } 
+    return this.handleAddSubmit(INITIAL_STATE);
   };
 
   handleEditSubmit = (INITIAL_STATE) => {
@@ -77,103 +78,151 @@ class WalletForm extends Component {
     }));
   };
 
-  // getExpenseToEditInfo = () => {
-  //   const { expenses, idToEdit } = this.props;
-  //   const { description } = this.state;
-  //   const expenseToEditInfo = expenses
-  //     .find((expense) => expense.id === idToEdit);
-  //   if (!description) {
-  //     this.setState({
-  //       description: expenseToEditInfo.description,
-  //       currency: expenseToEditInfo.currency,
-  //       method: expenseToEditInfo.method,
-  //       tag: expenseToEditInfo.tag,
-  //     });
-  //   }
-  // };
+  getExpesesFromLocalstore = () => {
+    const { saveExpesesToStore } = this.props;
+    const expeses = JSON.parse(localStorage.getItem('expenses')) || [];
+    return saveExpesesToStore(expeses);
+  }
+
+  getExpenseToEditInfo = () => {
+    const { expenses, idToEdit } = this.props;
+    const { description } = this.state;
+    const expenseToEditInfo = expenses
+      .find((expense) => expense.id === idToEdit);
+    if (!description) {
+      this.setState({
+        value: expenseToEditInfo.value,
+        description: expenseToEditInfo.description,
+        currency: expenseToEditInfo.currency,
+        method: expenseToEditInfo.method,
+        tag: expenseToEditInfo.tag,
+      });
+    }
+  };
+
+  togleButtonStyle = () => {
+    const { value, description } = this.state;
+    const { editor } = this.props;
+    let buttonStyles = "button medium centered walletFormButton";
+    if (value && description && !editor) {
+      buttonStyles += ' is-success';
+    };
+    if (value && description && editor) {
+      buttonStyles += ' is-warning';
+    };
+    return buttonStyles;
+  }
 
   render() {
     const { currencies, editor } = this.props;
     const { value, description, currency, method, tag } = this.state;
     return (
-      <section>
-        <form>
-          <label htmlFor="value">
-            Valor:
-            <input
-              type="number"
-              name="value"
-              id="value"
-              onChange={ this.handleChange }
-              value={ value }
-              data-testid="value-input"
-            />
-          </label>
-          <label htmlFor="description">
-            Descrição:
-            <input
-              type="text"
-              name="description"
-              id="description"
-              onChange={ this.handleChange }
-              value={ description }
-              data-testid="description-input"
-            />
-          </label>
-          <label htmlFor="currency">
-            Moeda:
-            <select
-              name="currency"
-              id="currency"
-              onChange={ this.handleChange }
-              value={ currency }
-              data-testid="currency-input"
+      <section className="section">
+        <form className="form walletForm">
+          <div className="level">
+            <div className="field level-item">
+              <label htmlFor="value" className="label">
+                Valor:
+                <div className="control">
+                  <input
+                    type="number"
+                    name="value"
+                    id="value"
+                    onChange={ this.handleChange }
+                    value={ value }
+                    className="input"
+                    data-testid="value-input"
+                  />
+                </div>
+              </label>
+            </div>
+            <div className="field level-item">
+              <label htmlFor="description" className="label">
+                Descrição:
+                <div className="control">
+                  <input
+                    type="text"
+                    name="description"
+                    id="description"
+                    onChange={ this.handleChange }
+                    value={ description }
+                    className="input"
+                    data-testid="description-input"
+                  />
+                </div>
+              </label>
+            </div>
+            <div className="field level-item">
+              <label htmlFor="currency" className="label">
+                Moeda:
+                <br />
+                <div className="control select">
+                  <select
+                    name="currency"
+                    id="currency"
+                    onChange={ this.handleChange }
+                    value={ currency }
+                    data-testid="currency-input"
+                  >
+                    { currencies
+                      .map((currencie, index) => (
+                        <option key={ index } value={ currencie }>
+                          { currencie }
+                        </option>
+                      )) }
+                  </select>
+                </div>
+              </label>
+            </div>
+            <div className="field level-item">
+              <label htmlFor="method" className="label">
+                Forma de pagamento:
+                <br />
+                <div className="control select">
+                  <select
+                    name="method"
+                    id="method"
+                    onChange={ this.handleChange }
+                    value={ method }
+                    data-testid="method-input"
+                  >
+                    <option value="Dinheiro">Dinheiro</option>
+                    <option value="Cartão de crédito">Cartão de crédito</option>
+                    <option value="Cartão de débito">Cartão de débito</option>
+                  </select>
+                </div>
+              </label>
+            </div>
+            <div className="field level-item">
+              <label htmlFor="tag" className="label">
+                Categoria:
+                <br />
+                <div className="control select">
+                  <select
+                    name="tag"
+                    id="tag"
+                    onChange={ this.handleChange }
+                    value={ tag }
+                    data-testid="tag-input"
+                  >
+                    <option value="Alimentação">Alimentação</option>
+                    <option value="Lazer">Lazer</option>
+                    <option value="Transporte">Transporte</option>
+                    <option value="Trabalho">Trabalho</option>
+                    <option value="Saúde">Saúde</option>
+                  </select>
+                </div>
+              </label>
+            </div>
+            <button
+              type="submit"
+              className={ this.togleButtonStyle() }
+              onClick={ (e) => this.handleSubmit(e) }
+              disabled={ !(value && description) }
             >
-              { currencies
-                .map((currencie, index) => (
-                  <option key={ index } value={ currencie }>
-                    { currencie }
-                  </option>
-                )) }
-            </select>
-          </label>
-          <label htmlFor="method">
-            Forma de pagamento:
-            <select
-              name="method"
-              id="method"
-              onChange={ this.handleChange }
-              value={ method }
-              data-testid="method-input"
-            >
-              <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de crédito">Cartão de crédito</option>
-              <option value="Cartão de débito">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Categoria:
-            <select
-              name="tag"
-              id="tag"
-              onChange={ this.handleChange }
-              value={ tag }
-              data-testid="tag-input"
-            >
-              <option value="Alimentação">Alimentação</option>
-              <option value="Lazer">Lazer</option>
-              <option value="Transporte">Transporte</option>
-              <option value="Trabalho">Trabalho</option>
-              <option value="Saúde">Saúde</option>
-            </select>
-          </label>
-          <button
-            type="submit"
-            onClick={ (e) => this.handleSubmit(e) }
-            disabled={ !(value && description) }
-          >
-            { editor ? 'Editar despesa' : 'Adicionar despesa' }
-          </button>
+              { editor ? 'Editar despesa' : 'Adicionar despesa' }
+            </button>
+          </div>
         </form>
       </section>
     );
@@ -185,6 +234,7 @@ const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(fetchCurrenciesAction()),
   fetchExchangeRates: (payload) => dispatch(fetchExchangeRatesAction(payload)),
   submitEditedExpense: (payload) => dispatch(submitEditedExpenseAction(payload)),
+  saveExpesesToStore: (payload) =>  dispatch(saveExpesesToStoreAction(payload))
 });
 
 const mapStateToProps = (state) => ({
