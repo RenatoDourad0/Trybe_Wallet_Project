@@ -40,7 +40,7 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody className="tbody">
-          { expenses.length > 0
+          { expenses.length
             && expenses.map((expense) => (
             <tr key={ expense.id } className="tr tableRow">
               <td className="th">{ expense.description }</td>
@@ -92,7 +92,8 @@ class Table extends Component {
                 }
               </td>
             </tr>
-          ))}
+            ))
+          }
         </tbody>
       </table>
     );

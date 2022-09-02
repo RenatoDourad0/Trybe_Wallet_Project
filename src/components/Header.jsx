@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { faUserCircle } from '@fortawesome/free-regular-svg-icons';
+import { faWallet, faCoins } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'bulma/css/bulma-rtl.css';
 import '../styles/App.css';
@@ -19,28 +20,13 @@ class Header extends Component {
   render() {
     const { email } = this.props;
     return (
-      <section className="section">
+      <section className="section header">
         <div className="level">
-
-          <img src="" alt="Logo" className="logo level-left" />
-
-          <div className="level-item totalExpenses">
-            <h3
-              data-testid="total-field"
-              className="level-item"
-            >
-              { this.calculateExpensesTotal() }
-            </h3>
-            &#32;
-            <h3
-              data-testid="header-currency-field"
-              className="level-item"
-            > 
-              BRL
-            </h3>
+          <div className="logo">
+          <FontAwesomeIcon icon={faCoins} className="coinsHeaderLogo"/>
+          <FontAwesomeIcon icon={faWallet} className="walletHeaderLogo"/>
           </div>
-
-          <div className="level-right userInfo">
+          <div className="level-item userInfo">
             <span className="icon userIcon">
               <FontAwesomeIcon icon={ faUserCircle } className="userIcon"/>
             </span>
@@ -50,6 +36,15 @@ class Header extends Component {
               className="username"
             >
               { email.split('@')[0] }
+            </h3>
+          </div>
+
+          <div className="level-right">
+            <h3
+              data-testid="total-field"
+              className="level-item totalExpenses"
+            >
+              { "Despesa total: " + this.calculateExpensesTotal() + " BRL" }
             </h3>
           </div>
 

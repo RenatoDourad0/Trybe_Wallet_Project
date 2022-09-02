@@ -13,7 +13,6 @@ store.subscribe(() => {
   const state = store.getState();
   const { wallet: { expenses } } = state;
   const savedExpenses = JSON.parse(localStorage.getItem('expenses')) || [];
-  console.log(expenses, savedExpenses)
   if (expenses.length !== 0) {
     localStorage.setItem('expenses', JSON.stringify(expenses))
   };

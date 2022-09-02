@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import loginAction from '../redux/actions/userActions';
 import { faEnvelope, faKeyboard, faCircleCheck, faCircleXmark, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { faWallet, faCoins } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'bulma/css/bulma-rtl.css';
 import '../styles/App.css';
@@ -71,7 +72,7 @@ class Login extends React.Component {
         Email:
         <div className="control has-icons-left has-icons-right">
           <span className="icon is-small is-left">
-            <FontAwesomeIcon icon={ faEnvelope } />
+            <FontAwesomeIcon icon={ faEnvelope } color="black" />
           </span>
           { validEmail
           ? <span className="icon is-small is-right">
@@ -88,7 +89,7 @@ class Login extends React.Component {
             name="email"
             onChange={ (e) => this.handleChange(e) }
             value={ email }
-            className="input"
+            className="input loginInput"
             data-testid="email-input"
           />
         </div>
@@ -105,7 +106,7 @@ class Login extends React.Component {
           Senha:
           <div className="control has-icons-left has-icons-right">
             <span className="icon is-small is-left">
-              <FontAwesomeIcon icon={ faKeyboard } />
+              <FontAwesomeIcon icon={ faKeyboard } color="black"/>
             </span>
             <div className="icon is-small is-right">
               { validPassword
@@ -124,7 +125,7 @@ class Login extends React.Component {
               name="password"
               onChange={ (e) => this.handleChange(e) }
               value={ password }
-              className="input"
+              className="input loginInput"
               data-testid="password-input"
             />
           </div>
@@ -160,6 +161,11 @@ class Login extends React.Component {
       <section className="section fullHeight">
         <form className="container">
           <div className="loginForm">
+            <div className="loginlogo">
+              <h3 className="textLoginLogo">TrybeWallet</h3>
+              <FontAwesomeIcon icon={faCoins} className="coinsLoginLogo"/>
+              <FontAwesomeIcon icon={faWallet} className="walletLoginLogo"/>
+            </div>
               { this.renderEmailInput() }
               { this.renderPasswordInput() }
               { this.renderButton() }

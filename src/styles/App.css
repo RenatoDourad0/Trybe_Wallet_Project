@@ -1,11 +1,58 @@
+#root {
+  background-color: whitesmoke;
+  overflow-x: scroll;
+  min-height: 100vh;
+}
+
 .loginForm {
-  max-width: 400px;
-  min-width: 200px;
   width: 40%;
+  min-width: 300px;
+  margin: auto;
   box-shadow: 2px 2px 5px 0;
   border-radius: 10px;
   padding: 50px;
+  background-color: white;
+}
+
+.loginlogo {
+  position: relative;
+  width: inherit;
+  height: 100px;
   margin: auto;
+}
+
+.textLoginLogo {
+  position: absolute;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  letter-spacing: 2px;
+  top: -5px;
+  left: -15px;
+}
+
+@media screen and (max-width: 1250px) {
+  .textLoginLogo {
+    /* top: -25px;
+    left: -15px; */
+    display: none;
+  }
+}
+
+.walletLoginLogo {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  left: 35%;
+  top: 25%;
+  color: black;
+}
+
+.coinsLoginLogo {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 55%;
+  top: 5%;
+  color: rgb(221, 221, 77);
 }
 
 .container {
@@ -20,6 +67,10 @@
 .centered {
   display: block;
   margin: auto;
+}
+
+.loginInput {
+  background-color: whitesmoke;
 }
 
 .loginValidationIcon {
@@ -42,8 +93,31 @@
   cursor: pointer;
 }
 
-.logo {
-  max-width: 100px;
+.walletHeader {
+  margin: 0 3%;
+}
+
+.header {
+  padding-bottom: 0;
+  min-height: 50px;
+}
+
+.walletHeaderLogo {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  left: 20px;
+  top: 25px;
+  color: black;
+}
+
+.coinsHeaderLogo {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: 40px;
+  top: 35px;
+  color: rgb(221, 221, 77);
 }
 
 .totalExpenses {
@@ -63,24 +137,56 @@
   padding-left: 10px;
 }
 
-/* .walletForm {
-  position: relative;
-  max-width: 90%;
+.walletForm {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin:auto;
+}
+
+.walletFormLevel {
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .walletFormButton {
-  position: absolute;
-  bottom: 15%;
-  right: -15%;
-} */
+  margin-bottom: 12px;
+  padding-top: 4px;
+} 
 
 /* .tableHeadItem {
   text-align: center;
 } */
 
+.walletTable {
+  margin: 0 3%;
+}
+
+.table {
+  padding: 20px;
+  border-radius: 10px;
+  margin: auto;
+}
+
 .tableRow {
   height: 85px;
   min-height: 85px;
+}
+
+.thead th {
+  font-weight: bolder;
+  text-align: center;
+  align-self: center;
+}
+
+table td:not([align]), table th:not([align]) {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table th:not([align]) {
+  text-align: center;
+  vertical-align: middle;
 }
 
 .tableEditMenu {
@@ -90,8 +196,35 @@
 .tableEditionButton {
   max-width: 70px;
   max-height: 30px;
+  align-self: center;
 }
 
 .tableEditionButton:nth-child(1) {
   margin-bottom: 5px;
+}
+
+.walletChart {
+  margin: 50px 3%;
+}
+
+.chartsContainer {
+  margin: auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  gap: 30px;
+}
+
+.chartContainer {
+  width: 500px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: white;
+  min-width: 200px;
+}
+
+.chartHeading {
+  text-align: center;
 }

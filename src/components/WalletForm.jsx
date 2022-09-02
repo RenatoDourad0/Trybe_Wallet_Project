@@ -27,7 +27,7 @@ class WalletForm extends Component {
   componentDidMount() {
     const { fetchCurrencies } = this.props;
     fetchCurrencies();
-    this.getExpesesFromLocalstore();
+    this.getExpensesFromLocalstore();
   }
 
   componentDidUpdate() {
@@ -78,10 +78,16 @@ class WalletForm extends Component {
     }));
   };
 
-  getExpesesFromLocalstore = () => {
+  getExpensesFromLocalstore = () => {
     const { saveExpesesToStore } = this.props;
-    const expeses = JSON.parse(localStorage.getItem('expenses')) || [];
-    return saveExpesesToStore(expeses);
+    const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    if (expenses.length > 0) {
+      const lastSavedID = expenses[expenses.length - 1].id;
+      this.setState({
+        id: lastSavedID + 1,
+      });
+    }
+    return saveExpesesToStore(expenses);
   }
 
   getExpenseToEditInfo = () => {
@@ -119,7 +125,7 @@ class WalletForm extends Component {
     return (
       <section className="section">
         <form className="form walletForm">
-          <div className="level">
+          <div className="level walletFormLevel">
             <div className="field level-item">
               <label htmlFor="value" className="label">
                 Valor:
@@ -214,14 +220,21 @@ class WalletForm extends Component {
                 </div>
               </label>
             </div>
-            <button
-              type="submit"
-              className={ this.togleButtonStyle() }
-              onClick={ (e) => this.handleSubmit(e) }
-              disabled={ !(value && description) }
-            >
-              { editor ? 'Editar despesa' : 'Adicionar despesa' }
-            </button>
+            <div className="field level-item">
+              <label htmlFor="" className="label">
+                <br />
+                <div className="control">
+                  <button
+                    type="submit"
+                    className={ this.togleButtonStyle() }
+                    onClick={ (e) => this.handleSubmit(e) }
+                    disabled={ !(value && description) }
+                  >
+                    { editor ? 'Editar despesa' : 'Adicionar despesa' }
+                  </button>
+                </div>
+              </label>
+            </div>
           </div>
         </form>
       </section>

@@ -40,19 +40,24 @@ The main habilities practiced here were:
 ![Desktop gif](/trybeTunes.gif)
 
 
+
 ### Links
 
-- Solution URL: [Github](https://github.com/RenatoDourad0/Project_TrybeTunes)
-- [Live site](https://renatodourad0.github.io/Project_TrybeTunes)
+- Solution URL: [Github](https://github.com/RenatoDourad0/Trybe_Wallet_Project)
+- [Live site](https://renatodourad0.github.io/Trybe_Wallet_Project/)
 
 ## My process
 
-This project was a opportunity to practice and consolidade my knowledge on React, especially with its components live Cicle methods and react-router.
+This project was a opportunity to consolidade my knowledge on React, especially with Redux.
 
 ### Built with
 
-- React Js
-- CSS
+- HTML / CSS / JS
+- React
+- React Router
+- Redux
+- RTL
+- Bulma
 
 
 ## Author
