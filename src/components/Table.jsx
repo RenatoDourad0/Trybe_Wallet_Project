@@ -40,8 +40,7 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody className="tbody">
-          { expenses.length
-            && expenses.map((expense) => (
+          { expenses.map((expense) => (
             <tr key={ expense.id } className="tr tableRow">
               <td className="th">{ expense.description }</td>
               <td className="td">{ expense.tag }</td>
@@ -67,7 +66,8 @@ class Table extends Component {
                     <span className="icon">
                           <FontAwesomeIcon
                             icon={ faBars }
-                            onMouseEnter={ () => this.changeMenuVisibility(expense.id) }
+                            className="tableMenuIcon"
+                            onClick={ () => this.changeMenuVisibility(expense.id) }
                           />
                         </span>)
                   : (

@@ -21,28 +21,28 @@ class Header extends Component {
     const { email } = this.props;
     return (
       <section className="section header">
-        <div className="level">
-          <div className="logo">
+        <div className="headerContainer">
+          <div className="walletLogo">
+          <h3 className="textHeaderLogo">TrybeWallet</h3>
           <FontAwesomeIcon icon={faCoins} className="coinsHeaderLogo"/>
           <FontAwesomeIcon icon={faWallet} className="walletHeaderLogo"/>
           </div>
-          <div className="level-item userInfo">
-            <span className="icon userIcon">
-              <FontAwesomeIcon icon={ faUserCircle } className="userIcon"/>
-            </span>
-            &#32;
+          <div className="userInfo">
             <h3
               data-testid="email-field"
               className="username"
             >
               { email.split('@')[0] }
             </h3>
+            <span className="icon userIcon">
+              <FontAwesomeIcon icon={ faUserCircle } className="userIcon"/>
+            </span>
           </div>
 
-          <div className="level-right">
+          <div className="">
             <h3
               data-testid="total-field"
-              className="level-item totalExpenses"
+              className=" totalExpenses"
             >
               { "Despesa total: " + this.calculateExpensesTotal() + " BRL" }
             </h3>

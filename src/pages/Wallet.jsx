@@ -15,17 +15,19 @@ class Wallet extends React.Component {
           <Header />
           <WalletForm />
         </section>
-        <section className="walletTable">
-          <Table />
-        </section>
         { expenses.length
           && (
-          <section className="walletChart">
-            <div className="chartsContainer">
-              <TagsChart />
-              <ExpensesChart /> 
-            </div>
-          </section>
+          <>
+            <section className="walletTable">
+              <Table />
+            </section>
+            <section className="walletChart">
+              <div className="chartsContainer">
+                <TagsChart />
+                <ExpensesChart /> 
+              </div>
+            </section>
+          </>
           )
         }
       </>

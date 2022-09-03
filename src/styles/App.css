@@ -2,6 +2,7 @@
   background-color: whitesmoke;
   overflow-x: scroll;
   min-height: 100vh;
+  min-width: 370px;
 }
 
 .loginForm {
@@ -11,38 +12,43 @@
   box-shadow: 2px 2px 5px 0;
   border-radius: 10px;
   padding: 50px;
+  padding-top: 20px;
   background-color: white;
 }
 
 .loginlogo {
   position: relative;
   width: inherit;
-  height: 100px;
   margin: auto;
+  height: 70px;
+  margin-bottom: 20px;
 }
 
 .textLoginLogo {
   position: absolute;
+  font-size: 20px;
+  font-weight: bold;
+  width: 50px;
+  height: 50px;
+  left: 50px;
+  top: 65px;
+  z-index: 2;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   letter-spacing: 2px;
-  top: -5px;
-  left: -15px;
 }
 
-@media screen and (max-width: 1250px) {
+/* @media screen and (max-width: 1250px) {
   .textLoginLogo {
-    /* top: -25px;
-    left: -15px; */
     display: none;
   }
-}
+} */
 
 .walletLoginLogo {
   position: absolute;
   width: 45px;
   height: 45px;
-  left: 35%;
-  top: 25%;
+  left: 20px;
+  top: 25px;
   color: black;
 }
 
@@ -50,8 +56,8 @@
   position: absolute;
   width: 50px;
   height: 50px;
-  left: 55%;
-  top: 5%;
+  left: 40px;
+  top: 35px;
   color: rgb(221, 221, 77);
 }
 
@@ -97,9 +103,17 @@
   margin: 0 3%;
 }
 
-.header {
+.headerContainer {
   padding-bottom: 0;
   min-height: 50px;
+  position: relative;
+}
+
+.walletLogo {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
 }
 
 .walletHeaderLogo {
@@ -120,21 +134,56 @@
   color: rgb(221, 221, 77);
 }
 
+.textHeaderLogo {
+  position: absolute;
+  font-size: 20px;
+  font-weight: bold;
+  width: 50px;
+  height: 50px;
+  left: 50px;
+  top: 65px;
+  z-index: 2;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  letter-spacing: 2px;
+}
+
 .totalExpenses {
+  position: absolute;
+  display:inline-block;
   font-weight: bolder;
+  text-align: right;
+  right: 0;
+  top: 60%;
+  padding-top: 20px;
 }
 
 .userInfo {
+  position: absolute;
+  right: 0;
+  top:20%;
+  width: 200px;
+  min-width: fit-content;
+  margin-right: 0;
+  margin-left: auto;
   font-weight: bold;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background-color: white;
+  padding: 8px;
+  border-radius: 40px;
 }
 
 .userIcon {
   width: 30px;
-  height: 30px
+  height: 30px;
+  display: inline-block;
 }
 
 .username {
-  padding-left: 10px;
+  display: inline-block;
 }
 
 .walletForm {
@@ -153,10 +202,6 @@
   margin-bottom: 12px;
   padding-top: 4px;
 } 
-
-/* .tableHeadItem {
-  text-align: center;
-} */
 
 .walletTable {
   margin: 0 3%;
@@ -191,6 +236,9 @@ table td:not([align]), table th:not([align]) {
 
 .tableEditMenu {
   width: 100px;
+}
+.tableMenuIcon {
+  cursor: pointer;
 }
 
 .tableEditionButton {
@@ -227,4 +275,10 @@ table td:not([align]), table th:not([align]) {
 
 .chartHeading {
   text-align: center;
+}
+
+@media screen and (max-width: 1097px) {
+  .chartsContainer {
+    justify-content: center;
+  }
 }
