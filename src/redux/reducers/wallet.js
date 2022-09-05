@@ -6,6 +6,7 @@ import {
   EDIT_EXPENSE,
   SUBMIT_EDITED_EXPENSE,
   SAVE_EXPENSES,
+  EDIT_EXPENSE_INFO,
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -14,6 +15,7 @@ const INITIAL_STATE = {
   expenses: [],
   editor: false,
   idToEdit: -1,
+  expensetoEditInfo: undefined,
   error: {
     currencies: '',
     rates: '',
@@ -25,7 +27,7 @@ function wallet(state = INITIAL_STATE, action) {
   case ADD_EXPENSE:
     return {
       ...state,
-      expenses: [...state.expenses, action.payload],
+      expenses: [action.payload, ...state.expenses ],
     };
   case GET_CURRENCIES:
     return {
@@ -48,7 +50,8 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       editor: true,
-      idToEdit: action.payload,
+      idToEdit: action.payload.id,
+      expensetoEditInfo: action.payload,
     };
   case SUBMIT_EDITED_EXPENSE:
     return {
@@ -56,12 +59,18 @@ function wallet(state = INITIAL_STATE, action) {
       editor: false,
       expenses: action.payload,
       idToEdit: -1,
+      expensetoEditInfo: undefined,
     };
   case SAVE_EXPENSES:
     return {
       ...state,
       expenses: action.payload,
     };
+    case EDIT_EXPENSE_INFO:
+      return {
+        ...state,
+
+      }
   default:
     return state;
   }

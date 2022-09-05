@@ -13,7 +13,7 @@ class ExpensesChart extends React.Component {
     const slicedExpenses = sortedExpenses.length > 5 ? sortedExpenses.slice(0,5) : sortedExpenses;
     const data = {
       labels: slicedExpenses.map((expense) => expense.description),
-      values: slicedExpenses.map((expense) => parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2))
+      values: slicedExpenses.map((expense) => parseFloat(expense.value * expense.exchangeRates[expense.currency].ask).toFixed(2))
     };
     return data;
   }

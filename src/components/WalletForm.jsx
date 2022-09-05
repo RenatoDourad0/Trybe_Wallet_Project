@@ -7,6 +7,7 @@ import {
   fetchExchangeRatesAction,
   submitEditedExpenseAction,
   saveExpesesToStoreAction,
+  getExpenseToEditInfoAction,
 } from '../redux/actions/walletActions';
 import 'bulma/css/bulma-rtl.css';
 import '../styles/App.css';
@@ -21,6 +22,8 @@ class WalletForm extends Component {
       tag: 'Alimentação',
       description: '',
       id: 0,
+      hasRenderedEditInfo: false,
+      hasFinishedEditing: false,
     };
   }
 
@@ -31,17 +34,23 @@ class WalletForm extends Component {
   }
 
   componentDidUpdate() {
+    const { hasRenderedEditInfo, hasFinishedEditing } = this.state;
     const { editor } = this.props;
-    if (editor) { this.getExpenseToEditInfo(); }
+    if (editor && !hasRenderedEditInfo) {
+      this.getExpenseToEditInfo();
+    }
+    if (editor && hasFinishedEditing && hasRenderedEditInfo) {
+      this.setState({ hasFinishedEditing: false, hasRenderedEditInfo: false });
+    }
   }
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({
       [name]: value,
     });
-  };
+  }
 
-  handleSubmit = async (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const INITIAL_STATE = {
       value: '',
@@ -55,7 +64,7 @@ class WalletForm extends Component {
       return this.handleEditSubmit(INITIAL_STATE);
     } 
     return this.handleAddSubmit(INITIAL_STATE);
-  };
+  }
 
   handleEditSubmit = (INITIAL_STATE) => {
     const { expenses, idToEdit, submitEditedExpense } = this.props;
@@ -64,9 +73,13 @@ class WalletForm extends Component {
     const editedExpense = { ...this.state, id, exchangeRates };
     expenses[indexExpenseToEdit] = editedExpense;
     const newExpenses = [...expenses];
-    submitEditedExpense(newExpenses);
-    this.setState(INITIAL_STATE);
-  };
+    submitEditedExpense(newExpenses); 
+    this.setState({
+      ...INITIAL_STATE,
+      hasRenderedEditInfo: false,
+      hasFinishedEditing: true,
+    });
+  }
 
   handleAddSubmit = async (INITIAL_STATE) => {
     const { addExpense, fetchExchangeRates } = this.props;
@@ -76,7 +89,7 @@ class WalletForm extends Component {
       id: state.id + 1,
       ...INITIAL_STATE,
     }));
-  };
+  }
 
   getExpensesFromLocalstore = () => {
     const { saveExpesesToStore } = this.props;
@@ -91,19 +104,25 @@ class WalletForm extends Component {
   }
 
   getExpenseToEditInfo = () => {
-    const { expenses, idToEdit } = this.props;
-    const { description } = this.state;
-    const expenseToEditInfo = expenses
-      .find((expense) => expense.id === idToEdit);
-    if (!description) {
-      this.setState({
-        value: expenseToEditInfo.value,
-        description: expenseToEditInfo.description,
-        currency: expenseToEditInfo.currency,
-        method: expenseToEditInfo.method,
-        tag: expenseToEditInfo.tag,
-      });
-    }
+    const INITIAL_STATE = {
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      hasRenderedEditInfo: true,
+    };
+    const { expensetoEditInfo } = this.props;
+    const { hasFinishedEditing } = this.state;
+    hasFinishedEditing ? this.setState(INITIAL_STATE) : this.setState({
+      value: expensetoEditInfo.value,
+      description: expensetoEditInfo.description,
+      currency: expensetoEditInfo.currency,
+      method: expensetoEditInfo.method,
+      tag: expensetoEditInfo.tag,
+      hasRenderedEditInfo: true,
+      hasFinishedEditing: false,
+    });
   };
 
   togleButtonStyle = () => {
@@ -240,14 +259,15 @@ class WalletForm extends Component {
       </section>
     );
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => ({
   addExpense: (payload) => dispatch(addExpenseAction(payload)),
   fetchCurrencies: () => dispatch(fetchCurrenciesAction()),
   fetchExchangeRates: (payload) => dispatch(fetchExchangeRatesAction(payload)),
   submitEditedExpense: (payload) => dispatch(submitEditedExpenseAction(payload)),
-  saveExpesesToStore: (payload) =>  dispatch(saveExpesesToStoreAction(payload))
+  saveExpesesToStore: (payload) =>  dispatch(saveExpesesToStoreAction(payload)),
+  getExpenseToEditInfo: (payload) =>  dispatch(getExpenseToEditInfoAction(payload)),
 });
 
 const mapStateToProps = (state) => ({
@@ -255,6 +275,7 @@ const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   editor: state.wallet.editor,
   idToEdit: state.wallet.idToEdit,
+  expensetoEditInfo: state.wallet.expensetoEditInfo,
 });
 
 WalletForm.propTypes = {

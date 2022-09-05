@@ -13,33 +13,25 @@
 
 ### The project
 
-In this project I developed a single page application using React. It is called TrybeTunes and it's users are capable of play songs from the most varied bands and artists, create a list of favorite songs and edit the profile. Some of it's main features are:
+In this project I developed a wallet aplication using React. It's users are capable of register expenses in different currencies and catalog them by tag or 
+payment method. The aplication requests exchange rates data from a currencies API and convert the user expenses to brazilian Real. Users are also able to visualise their expenses on graphs. Some of it's main features are:
 
-- Login
-- Search for a band or artist
-- List available albums by that band or artist
-- View songs from a selected album
-- Play a preview of the songs on this album
-- Favorite and unfavorite songs
-- View the list of favorite songs
-- See the profile of the person logged in
-- Edit the profile of the person logged in
+- Login form with validations
+- Add expense form
+- Expense edition
+- Expenses table and graph interface
 
 The main habilities practiced here were:
 
 - Make requests and consume data from an API
-- Use the lifecycle methods of a React component
-- Use the setState function to ensure that a given code is only executed after the state is updated
-- Use the BrowserRouter component correctly
-- Create routes, mapping the URL path with the corresponding component, via Route
-- Using the React Router Switch
-- Create navigation links in the application with the Link component
+- Apply redux global state to react components
+- Apply redux thunk for async actions 
+- Save data to localStorage
+- generate graphics with graph.js
 
 ### Screenshot
 
-![Desktop gif](/trybeTunes.gif)
-
-
+![Desktop gif](/video.mp4)
 
 ### Links
 
@@ -58,7 +50,7 @@ This project was a opportunity to consolidade my knowledge on React, especially 
 - Redux
 - RTL
 - Bulma
-
+- Chart.js
 
 ## Author
   

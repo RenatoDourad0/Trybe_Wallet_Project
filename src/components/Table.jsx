@@ -29,13 +29,13 @@ class Table extends Component {
         <thead className="thead">
           <tr>
             <th>Descrição</th>
-            <th>Tag</th>
+            <th>Categoria</th>
             <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
+            <th>Valor pago</th>
+            <th>Moeda utilizada</th>
             <th>Moeda de conversão</th>
+            <th>Câmbio para conversão</th>
+            <th>Valor convertido</th>
             <th>Editar</th>
           </tr>
         </thead>
@@ -46,7 +46,8 @@ class Table extends Component {
               <td className="td">{ expense.tag }</td>
               <td className="td">{ expense.method }</td>
               <td className="td">{ parseFloat(expense.value).toFixed(2) }</td>
-              <td className="td">{ expense.exchangeRates[expense.currency].name }</td>
+              <td className="td">{ expense.exchangeRates[expense.currency].name.split('/')[0] }</td>
+              <td className="td">Real</td>
               <td className="td">
                 {
                   parseFloat(expense.exchangeRates[expense.currency].ask)
@@ -59,7 +60,6 @@ class Table extends Component {
                   * expense.exchangeRates[expense.currency].ask).toFixed(2)
                 }
               </td>
-              <td className="td">Real</td>
               <td className="td tableEditMenu">
                 { expenseOnfocusId !== expense.id
                   ? (
@@ -84,7 +84,7 @@ class Table extends Component {
                         type="button"
                         data-testid="edit-btn"
                         className="button tableEditionButton is-warning"
-                        onClick={ () => editExpense(expense.id) }
+                        onClick={ () => editExpense(expense) }
                       >
                         Editar
                       </button>
