@@ -31,7 +31,7 @@ The main habilities practiced here were:
 
 ### Screenshot
 
-![Desktop video](/video.mp4)
+![Desktop img](/img.png)
 
 ### Links
 
